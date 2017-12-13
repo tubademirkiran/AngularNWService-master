@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html ng-app="northwindApp">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="../Scripts/angular.min.js"></script>
+    <script src="northApp.js"></script>
+    <script src="../Scripts/dirPagination.js"></script>
+</head>
+<body ng-controller="productsController" ng-init="GetAllproducts()">
+ 
+    <br />
+    <table class="table table-condensed table-hover">
+        <thead>
+            <tr>
+                <th ng-click="Sort('ProductID')">
+                    <a href=""> Product ID</a>
+                </th>
+                <th ng-click="Sort('ProductName')">
+                    <a href=""> Product Name</a>
+                </th>
+               
+                <th ng-click="Sort('UnitPrice')">
+                    <a href="">  Unit Price</a>
+                </th>
+                <th ng-click="Sort('UnitsInStock')">
+                    <a href=""> UnitsInStock</a>
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <!-- false yaparsak ürünleri hafızasında nasıl kayıtlıysa öyle getirir-->
+            <!--<tr ng-repeat="item in plist|orderBy:key:AscDesc|filter:arama">-->
+            <tr dir-paginate="item in products |orderBy:key:AscDesc|filter:arama|itemsPerPage:10">
+                <td><a href="" ng-click="GetByProductID(item.ProductID)">{{item.ProductID}}</a></td>
+                <td>{{item.ProductName|lowercase}}</td>
+               
+                <td>{{item.UnitPrice}}</td>
+                <td>{{item.UnitsInStock}}</td>
+                <td><button class="btn btn-danger glyphicon glyphicon-remove" ng-click="DeleteByProductID(item.ProductID)">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <dir-pagination-controls>
+        [max-size="3"]
+        [direction-links="true"]
+        [boundary-links="true"]
+    </dir-pagination-controls>
+  <strong>{{Msg}}</strong>
+    <table class="table table-condensed table-hover">
+        <tr>
+            <td>Product Name</td>
+            <td><input type="text" ng-model="product.ProductName" /></td>
+        </tr>
+        <tr>
+            <td>Unit Price</td>
+            <td><input type="text" ng-model="product.UnitPrice" /></td>
+        </tr>
+        <tr>
+            <td>Units in Stock</td>
+            <td><input type="text" ng-model="product.UnitsInStock" /></td>
+        </tr>
+        <tr>
+            <td>Discontinued</td>
+            <td><input type="checkbox" ng-model="product.Discontinued" /></td>
+        </tr>
+        <tr>
+            <td>Categories</td>
+            <td><select ng-init="product.CategoryID=options[0]" ng-model="product.CategoryID" ng-options="item.CategoryID as item.CategoryName for item in clist"></select>{{product.CategoryID}}</td>
+          
+        </tr>
+        <tr>
+            <td>Suppliers</td>
+            <td><select ng-init="product.SupplierID=options[0]" ng-model="product.SupplierID" ng-options="item.SupplierID as item.CompanyName for item in slist"></select>{{product.SupplierID}}</td>
+
+        </tr>
+        <tr>
+        <td><button class="btn btn-success glyphicon glyphicon-remove" ng-click="AddProduct(product)">Add</button></td>
+        <td><button class="btn btn-warning glyphicon glyphicon-remove" ng-click="UpdateProduct(product)">Update</button></td>
+        </tr>
+    </table>
+   
+   
+</body>
+</html>

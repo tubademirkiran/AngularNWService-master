@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html ng-app="northwindApp">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+
+    <script src="../Scripts/angular.js"></script>
+    <script src="northwindApps.js"></script>
+</head>
+<body ng-controller="productsController" >
+    <div class="container" ng-init="GetAllproducts()">
+        {{productList}}
+
+    </div>
+</body>
+</html>
